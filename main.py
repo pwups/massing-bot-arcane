@@ -265,6 +265,38 @@ async def regret(
         view=CloseTicketView()
     )
 
+@bot.command(name="a")
+async def approve(ctx):
+    await ctx.send("_ _\n-#  ⠀ ⠀ ⠀ ⠀ ⠀⸻ ⠀you must do checkpoints, they're **required** ⠀⤸\n-#  ⠀ ⠀ ⠀⠀⠀ ⠀ ⠀◟⠀do not join if you're not gonna post yet ⠀<:heart_7:1366096550903676978> ⠀｠\n-#  ⠀ ⠀  ⠀ ⠀ ⠀˖  ₊ ⠀ ⠀you have **24 hours to post, 1 day max ext.**  ׅ     ⊹\n_ _ [⠀](https://discord.gg/ax3jZ52hAc )")
+
+@bot.command(name="d")
+async def sep_over(ctx):
+    await ctx.send("_ _\n\n\n\n　　　　　　♡　　₊　　*sep  over.*\n　　　　　　⊱　run　**` /door `**  ৎ\n\n\n\n_ _")
+
+    try:
+        await ctx.channel.edit(name="done")
+    except discord.Forbidden:
+        await ctx.send("I don't have permission to rename the channel.", delete_after=5)
+    except Exception as e:
+        await ctx.send(f"An error occurred: {e}", delete_after=5)
+
+# Autoresponders
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+
+    # Autoresponder 1
+    if message.content.lower() == "silence":
+        await message.channel.send("_ _\n\n　　　　**send a song reco**　·　<:caitdns:1366098365275701289>\n　　　　i like  =  free ovn　✿　⁺ ℘\n\n_ _")
+
+    # Autoresponder for "freaky"
+    if message.content.lower() == "memory":
+        await message.channel.send("_ _\n\n　　　੭　**send your favorite pic**　<a:h2white_sparks:1366096518855266427>\n\n_ _")
+
+    # Process commands (very important)
+    await bot.process_commands(message)
+
 # ----- Events -----
 @bot.event
 async def on_ready():
