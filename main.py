@@ -276,6 +276,7 @@ async def on_ready():
         print(e)
     activity = discord.Streaming(
         name="i can't hear it now 𝜗℘",
+        url="https://www.twitch.tv/sexcmiel"
     )
     await bot.change_presence(status=discord.Status.idle, activity=activity)
 
