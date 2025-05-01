@@ -275,7 +275,7 @@ async def on_ready():
     except Exception as e:
         print(e)
     activity = discord.Streaming(
-        name="i can't hear it now 𝜗℘",
+        name="freya ridings 𝜗℘",
         url="https://www.twitch.tv/sexcmiel"
     )
     await bot.change_presence(status=discord.Status.idle, activity=activity)
