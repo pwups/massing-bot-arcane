@@ -71,7 +71,7 @@ class ClickButton(discord.ui.View):
 
     @discord.ui.button(label="ㅤclickㅤ⠀⸺ㅤ⠀𝜗♥︎⠀♪ㅤ", style=discord.ButtonStyle.secondary)
     async def click_me_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_modal(LoseModal(self.original_message))
+        await interaction.response.send_modal(BreathingModal(self.original_message))
 
 # ----- Notification Modal -----
 class NotificationModal(discord.ui.Modal, title="（・＿＼）"):
