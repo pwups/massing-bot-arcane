@@ -121,28 +121,22 @@ class ClickMeView(discord.ui.View):
         await interaction.response.send_modal(NotificationModal())
 
 # ----- Ticket Close Button -----
-class TicketActionView(discord.ui.View):
+class RegretButtonView(discord.ui.View):
     def __init__(self):
         super().__init__(timeout=None)
-      
+
+    @discord.ui.button(
+        label="ㅤ(っ- ‸ – ς)ㅤ",
+        style=discord.ButtonStyle.danger
     )
     async def regret_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message(
             "_ _\n\n    <a:4purplebabystar:1367097764974039041>  result  has  been  **sent**  ♡\n     ₊   click button to close ticket\n\n_ _",
-            ephemeral=False,
-            view=self  # Reuse the same view to keep showing the close button
+            view=CloseTicketView()  # 👈 close button included here
         )
-
-    @discord.ui.button(
-        label=" ",
-        style=discord.ButtonStyle.danger,
-        emoji="_ _\n\n    <a:4purplebabystar:1367097764974039041>  result  has  been  **sent**  ♡\n     ₊   click button to close ticket\n\n_ _"  # Optional
-    )
-    async def close_ticket_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.message.delete()  # or any logic to close the ticket
         
 # ----- Slash Commands -----
-@bot.tree.command(name="lose", description="i don't wanna lose . . .")
+@bot.tree.command(name="breathing", description="ticket　⊹　　　₊　　　⁺")
 async def lose(interaction: discord.Interaction):
     await interaction.response.defer(ephemeral=True)
     guild = interaction.guild
@@ -157,34 +151,37 @@ async def lose(interaction: discord.Interaction):
         user: discord.PermissionOverwrite(view_channel=True, send_messages=True, read_messages=True)
     }
 
-    channel = await guild.create_text_channel(name=f"wait．{user.name}", category=category, overwrites=overwrites)
+    channel = await guild.create_text_channel(name=f"w﹕{user.name}", category=category, overwrites=overwrites)
 
     embed = discord.Embed(
-        description="<:b_blank001:1349341503163732091>\n\nㅤㅤㅤㅤ<:emoji_2:1315004719063760917>ㅤnobody  gets  me  you  doㅤ᧔♡᧓ \n<:b_blank001:1349341503163732091>",
+        description="<:00:1367082106341167216>
+<:00:1367082106341167216><:00:1367082106341167216><:00:1367082106341167216><:00:1367082106341167216><:00:1367082106341167216><:00:1367082106341167216><a:05_blue_moon:1367097760729403495>‎‎‎‎‎‎‎⡴<:00:1367082106341167216>just tell me how<:00:1367082106341167216>⟡ ₊
+<:00:1367082106341167216><:00:1367082106341167216><:00:1367082106341167216><:00:1367082106341167216><:00:1367082106341167216><:00:1367082106341167216>♪  ♪<:00:1367082106341167216>to keep breathing<:00:1367082106341167216>✿
+<:00:1367082106341167216>",
         color=DARK_GRAY
     )
-    embed.set_image(url="https://uproxx.com/wp-content/uploads/2022/12/sza-nobody-gets-me-video.jpg")
+    embed.set_image(url="https://media.discordapp.net/attachments/1366347959343517716/1367337344516231275/Untitled202_20250501110957.png?ex=681437a2&is=6812e622&hm=a00989c4be6ad411e206e4530a058a8622b4e143d010e28dc712303b528bbd17&=&format=webp&quality=lossless&width=1056&height=624")
 
     view = ClickButton(None)
     message = await channel.send(embed=embed, view=view)
     view.original_message = message
 
     await interaction.followup.send(
-        f"_ \n\n\n _　　　　<:0wb:1315190556875292672>          ⁺     ⊹\n_ _　　　　{channel.mention}\n\n\n_ _"
+        f"_ \n\n\n _　　　　<:blue_flower:1367358723269595249>          ⁺     ⊹\n_ _　　　　{channel.mention}\n\n\n_ _"
     )
 
-@bot.tree.command(name="nobody", description="only like myself when i'm with you . . .")
+@bot.tree.command(name="dreams", description="finished　⊹　　　₊　　　⁺")
 async def nobody(interaction: discord.Interaction):
     embed = discord.Embed()
-    embed.set_image(url="https://hiphophundred.com/wp-content/uploads/2022/12/Screen-Shot-2022-12-16-at-1.02.56-PM.png")
+    embed.set_image(url="https://media.discordapp.net/attachments/1366347959343517716/1367343024371404910/Untitled202_20250501113237.png?ex=68143ced&is=6812eb6d&hm=e3914c498a94052859630fc9b1868aa75cbadfacb786b70d60009716122f176a&=&format=webp&quality=lossless&width=1056&height=624")
     await interaction.response.send_message(
-        content="<:b_blank001:1349341503163732091>\nㅤㅤㅤㅤ<:emoji_2:1315004719063760917>ㅤnobody  gets  me  you  doㅤ᧔♡᧓ \n<:b_blank001:1349341503163732091>",
+        content="_ _\n　　　✧ ‿︵ 　~~　　~~ 　while pretending i'm not drowning\n_ _",
         embed=embed,
         view=ClickMeView()
     )
 
 @bot.tree.command(name="done", description="miel only")
-@app_commands.describe(sep="sep time", user="who", link="invite link", edit="ticket channel (optional)")
+@app_commands.describe(sep="sep time", user="who", link="invite link", edit="ticket channel")
 @app_commands.checks.has_role(REQUIRED_ROLE_ID)
 async def done(interaction: discord.Interaction, sep: str, user: discord.User, link: str, edit: discord.TextChannel = None):
     await interaction.response.defer(ephemeral=True)
@@ -193,8 +190,8 @@ async def done(interaction: discord.Interaction, sep: str, user: discord.User, l
         await interaction.followup.send("Target channel not found.")
         return
 
-    await target_channel.send(f"_ _\n\n                          ₊ ⊹      *{sep}* <a:idk_what_this_is:1365916326048039032> {user.mention}\n\n_ _ [⠀]( {link} )")
-    await target_channel.send("_ _\n\n\n-# _ _  <a:freedom:1350041904099889182>  (｡˘﹏˘｡)っ  **wait  awhile  to  count  invites**         ***!***\n\n\n_ _")
+    await target_channel.send(f"_ _\n\n                          ₊ ⊹      *{sep}* <a:004_blue_ghost:1367359639628414978> {user.mention}\n\n_ _ [⠀]( {link} )")
+    await target_channel.send("_ _\n\n\n-# _ _  <a:pixwing:1367097770506326046>  (｡˘﹏˘｡)っ  **wait  awhile  to  count  invites**         ***!***\n\n\n_ _")
 
     if edit:
         try:
@@ -212,7 +209,7 @@ async def dm(interaction: discord.Interaction, user: discord.Member):
     await interaction.response.defer(ephemeral=True)
     try:
         await user.send(
-            f"_ \n\n\n\n\n _        sep  over.   ﹙   <a:emoji_4:1315006475978149950>   ﹚   {user.mention}   ✿\n-# _ _         check invites    .    ◟⠀run **/regret** in ticket\n\n\n\n\n_ _"
+            f"_ \n\n\n\n\n _        sep  over.   ﹙   <:emoji_35:1367097773014384702>   ﹚   {user.mention}   ✿\n-# _ _         check invites    .    ◟⠀run **/door** in ticket\n\n\n\n\n_ _"
         )
         await interaction.followup.send("User has been DMed.")
     except discord.Forbidden:
@@ -223,14 +220,14 @@ class CloseTicketView(discord.ui.View):
     def __init__(self):
         super().__init__(timeout=None)
 
-    @discord.ui.button(label="", style=discord.ButtonStyle.danger, emoji="<a:hrt_locket:1366073837954793483>", custom_id="close_ticket")
+    @discord.ui.button(label="", style=discord.ButtonStyle.danger, emoji="<a:bluespinningheart:1367355716569923644>", custom_id="close_ticket")
     async def close_ticket(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.defer()  # Acknowledge the click immediately
         await interaction.channel.delete()
 
 @bot.tree.command(
-    name="regret",
-    description="regret, self-blame, inability to move on . . ."
+    name="door",
+    description="results　⊹　　　₊　　　⁺"
 )
 @app_commands.describe(
     invites=". invites gained",
@@ -258,7 +255,7 @@ async def regret(
     content = f"_ _\n                                **__{invites}__    invites**    ◟︵ ｡\n[⠀]({link})"
 
     embed = discord.Embed(description=f"(+{portals}p)‎ ‎‎ ‎ ‎ ‎ ‎‎ ‎ ‎ ‎‎‎‎ ‎ ‎ ‎ ‎ ‎‎ ‎ ‎ ‎‎ ‎‎ ‎ ‎ ‎ ‎ཀ‎ ‎‎ ‎ ‎ ‎ ‎‎ ‎ ‎ ‎‎‎‎ ‎ ‎ ‎ ‎ ‎‎ ‎ ‎ ‎‎ ‎‎ ‎ ‎ ‎ {type}")
-    embed.set_image(url="https://media.discordapp.net/attachments/1365870103102492772/1365925776956063834/Untitled201_20250427134111.png?ex=680fbdc2&is=680e6c42&hm=8ddf1e700f1f42c27f670b720fcec7e123b876fb9d9fec06c87036a3b4eec8cd&=&format=webp&quality=lossless")
+    embed.set_image(url="https://media.discordapp.net/attachments/1366347959343517716/1367347180444057671/Untitled201_20250501114858.png?ex=681440cb&is=6812ef4b&hm=1a090164d5ceed30a01d86c21f8449462bdb88b7eebcd630fffb2353321ab9df&=&format=webp&quality=lossless")
     embed.set_footer(
         text=f"{user.name}‎ㅤㅤㅤ‎⟢ㅤㅤㅤthankq for massing",
         icon_url=user.avatar.url if user.avatar else discord.Embed.Empty
@@ -267,7 +264,7 @@ async def regret(
     await review_channel.send(content=content, embed=embed)
 
     await interaction.followup.send(
-        "_ _\n\n    <:diamond_line:1366074032709042289>  review  has  been  **sent**  ♡\n     ₊   click button to close ticket\n\n_ _",
+        "_ _\n\n    <a:4purplebabystar:1367097764974039041>  result  has  been  **sent**  ♡\n     ₊   click button to close ticket\n\n_ _",
         view=CloseTicketView()
     )
 
@@ -280,7 +277,9 @@ async def on_ready():
         print(f"Synced {len(synced)} slash commands.")
     except Exception as e:
         print(e)
-    activity = discord.Activity(type=discord.ActivityType.listening, name="nobody gets me.")
-    await bot.change_presence(status=discord.Status.dnd, activity=activity)
+    activity = discord.Streaming(
+        name="i can't hear it now 𝜗℘",
+    )
+    await bot.change_presence(status=discord.Status.idle, activity=activity)
 
 bot.run(TOKEN)
