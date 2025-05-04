@@ -219,13 +219,16 @@ async def close(interaction: discord.Interaction, user: discord.User, reason: st
         await interaction.response.send_message("You are not allowed to use this command.", ephemeral=True)
         return
 
+    # Respond immediately to avoid "Unknown interaction" error
+    await interaction.response.send_message("Closing ticket...", ephemeral=True)
+
     try:
         await user.send(f"_ _\n\n　　　　　　**ticket  closed**<:005:1030916028936507494><a:w11:1367097776566960208>\n　　　 reason: 　  {reason} 　❜\n\n_ _")
     except discord.Forbidden:
-        await interaction.response.send_message("Could not DM the user. They might have DMs disabled.", ephemeral=True)
+        await interaction.followup.send("Could not DM the user. They might have DMs disabled.", ephemeral=True)
         return
 
-    await interaction.response.send_message("Ticket closed and user notified. Deleting channel...", ephemeral=True)
+    # Delete the channel after a short delay to ensure messages are sent
     await interaction.channel.delete()
 
 # ----- Regret Command and Close Ticket View -----
