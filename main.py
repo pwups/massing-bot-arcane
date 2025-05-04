@@ -223,7 +223,7 @@ async def close(interaction: discord.Interaction, user: discord.User, reason: st
     await interaction.response.send_message("Closing ticket...", ephemeral=True)
 
     try:
-        await user.send(f"_ _\n\n　　　　　　**ticket  closed**<:005:1030916028936507494><a:w11:1367097776566960208>\n　　　 reason: 　  {reason} 　❜\n\n_ _")
+        await user.send(f"_ _\n\n　　　　　　**ticket  closed** 　 <a:w11:1367097776566960208>\n　　　 reason: 　  {reason} 　❜\n\n_ _")
     except discord.Forbidden:
         await interaction.followup.send("Could not DM the user. They might have DMs disabled.", ephemeral=True)
         return
